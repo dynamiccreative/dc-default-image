@@ -4,7 +4,7 @@
  * Description: Add default image to category
  * Author: Dynamic Creative
  * Author URI: https://www.dynamic-creative.com
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 class Dc_Default_Image {
     public function __construct() {
@@ -31,7 +31,7 @@ class Dc_Default_Image {
 
 	public function plugin_settings_page_content() { ?>
 	    <div class="wrap">
-	        <h2>DC Default Image Settings Page</h2><?php
+	        <h2>DC Default Image Settings</h2><?php
 	        if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] ){
                   $this->admin_notice();
             } ?>
@@ -42,7 +42,13 @@ class Dc_Default_Image {
                     submit_button();
                 ?>
     		</form>
-    	</div> <?php
+    	</div> 
+    	<div class="dc_admin_right">
+			<h3>A propos de Dynamic Creative</h3>
+			<?php echo "<p>Agence Web cr&eacute;e en 1999. Conception de sites Internet, Mobile, d&eacute;veloppement et bien d'autres...</p>"; ?>
+			<p><a href="https://www.dynamic-creative.com" target="_blank"><img src="<?php echo plugins_url( 'img/logo.png' , __FILE__ ); ?>" alt="dynamic-creative.com" width="200" height="44"/></a></p>
+		</div>
+    	<?php
 	}
 
 	public function admin_notice() { ?>
@@ -139,11 +145,6 @@ class Dc_Default_Image {
 	    }
 	}
 
-	/*public function dcdi_menu() {
-	add_options_page( 'DC Default Image Options', 'DC Default Image', 'manage_options', 'dc_default_image', 'dc_default_image' );
-	}*/
-
-
 }
 new Dc_Default_Image();
 
@@ -159,11 +160,10 @@ if (get_option('id_image_field') && get_option('id_cat_field')) {
 		        if ( ! $thumbnail_id ) {
 		                $thumbnail_id = get_option('id_image_field'); //id of default featured image
 	            }
-	            return  $thumbnail_id;
 	        }
 	    }	
+	    return  $thumbnail_id;
 	}
-
 	add_filter( 'post_thumbnail_id', 'my_filter_thumbnail_id', 20, 5 );
 }
 
@@ -178,5 +178,3 @@ function dcdi_settings_link($links) {
 }
 $plugin = plugin_basename(__FILE__); 
 add_filter("plugin_action_links_$plugin", 'dcdi_settings_link' );
-
-
